@@ -26,6 +26,11 @@ def os_version():
     return pytest.config.getoption("-O")
 
 
+@pytest.fixture
+def resolution():
+    return pytest.config.getoption("-R")
+
+
 def pytest_addoption(parser):
     parser.addoption("-B", "--browser",
                      dest="browser",
@@ -47,3 +52,7 @@ def pytest_addoption(parser):
                      dest="os_version",
                      default="10",
                      help="OS Version: XP, 7, 10, High Sierra")
+    parser.addoption("-R", "--resolution",
+                     dest="resolution",
+                     default="1366x768",
+                     help="OS Resolution: 1024x768, 1280x800, 1280x1024, 1366x768")
