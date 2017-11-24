@@ -1,5 +1,4 @@
 import pytest
-import os
 
 
 @pytest.fixture
@@ -38,13 +37,13 @@ def pytest_addoption(parser):
                      help="Run the test in Browserstack: Y or N")
     parser.addoption("-V", "--ver",
                      dest="browser_version",
-                     default="45",
+                     default="62",
                      help="Browser version")
     parser.addoption("-P", "--platform",
                      dest="platform",
                      default="Windows",
-                     help="OS Platform: Windows, Linux")
+                     help="OS Platform: Windows, Linux, OS X")
     parser.addoption("-O", "--os_version",
                      dest="os_version",
-                     default="7",
-                     help="OS Version: XP, 7, 10")
+                     default="10",
+                     help="OS Version: XP, 7, 10, High Sierra")
