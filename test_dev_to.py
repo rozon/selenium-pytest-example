@@ -1,3 +1,4 @@
+import pytest
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
@@ -24,56 +25,63 @@ def test_github_user_search(browser, browserstack_flag, browser_version, platfor
     driver.get('https://github.com/')
 
     # Check for page title
-    if "GitHub" in driver.title:
-        pass_counter += 1
-    checks += 1
+    with pytest.allure.step('Check for page title'):
+        if "GitHub" in driver.title:
+            pass_counter += 1
+        checks += 1
 
     # Check if github performed a search for given username
-    input_github_search = driver.find_element_by_xpath(".//input[contains(@placeholder, 'Search GitHub')]")
-    input_github_search.send_keys(github_user_name)
-    input_github_search.submit()
+    with pytest.allure.step('Check if github performed a search for given username'):
+        input_github_search = driver.find_element_by_xpath(".//input[contains(@placeholder, 'Search GitHub')]")
+        input_github_search.send_keys(github_user_name)
+        input_github_search.submit()
 
-    if github_user_name in driver.title:
-        pass_counter += 1
-    checks += 1
+        if github_user_name in driver.title:
+            pass_counter += 1
+        checks += 1
 
     # Check if github returns any user
-    label_users_search_result = driver.find_element_by_xpath(".//a[contains(@class, 'UnderlineNav-item') and text()='Users']/span")
-    github_user_results_count = int(label_users_search_result.text)
+    with pytest.allure.step('Check if github returns any user'):
+        label_users_search_result = driver.find_element_by_xpath(".//a[contains(@class, 'UnderlineNav-item') and text()='Users']/span")
+        github_user_results_count = int(label_users_search_result.text)
 
-    if github_user_results_count > 0:
-        pass_counter += 1
-    checks += 1
+        if github_user_results_count > 0:
+            pass_counter += 1
+        checks += 1
 
     # Check if github load users results
-    try:
-        label_users_search_result.click()
-        pass_counter += 1
-    except Exception as e:
-        print(e)
-    checks += 1
+    with pytest.allure.step('Check if github load users results'):
+        try:
+            label_users_search_result.click()
+            pass_counter += 1
+        except Exception as e:
+            print(e)
+        checks += 1
 
     # Check if github results returns same amount of users
-    label_users_search_count = driver.find_element_by_xpath(".//div[contains(@class, 'three-fourths')]/div[1]/h3")
+    with pytest.allure.step('Check if github results returns same amount of users'):
+        label_users_search_count = driver.find_element_by_xpath(".//div[contains(@class, 'three-fourths')]/div[1]/h3")
 
-    if github_user_results_count == int(label_users_search_count.text[0:2]):
-        pass_counter += 1
-    checks += 1
+        if github_user_results_count == int(label_users_search_count.text[0:2]):
+            pass_counter += 1
+        checks += 1
 
     # Check if github user url appears on results table
-    label_user_profile = driver.find_element_by_xpath(".//em[text()='" + github_user_name + "']")
+    with pytest.allure.step('Check if github user url appears on results table'):
+        label_user_profile = driver.find_element_by_xpath(".//em[text()='" + github_user_name + "']")
 
-    try:
-        label_user_profile.click()
-        pass_counter += 1
-    except Exception as e:
-        print(e)
-    checks += 1
+        try:
+            label_user_profile.click()
+            pass_counter += 1
+        except Exception as e:
+            print(e)
+        checks += 1
 
     # Check if github profile is shown on browser
-    if github_user_name in driver.title:
-        pass_counter += 1
-    checks += 1
+    with pytest.allure.step('Check if github profile is shown on browser'):
+        if github_user_name in driver.title:
+            pass_counter += 1
+        checks += 1
 
     driver.quit()
     assert pass_counter == checks
