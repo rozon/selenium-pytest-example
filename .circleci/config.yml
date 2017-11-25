@@ -40,11 +40,17 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements/requirements.txt" }}
 
       # run tests!
-      - run:
-          name: run tests
-          command: |
-            . venv/bin/activate
-            python py.test -v
+      - test:
+        pre:
+          - "py.test-3 -v":
+            environment:
+              PYTHONPATH: $PWD
+
+#      - run:
+#          name: run tests
+#          command: |
+#            . venv/bin/activate
+#            python py.test -v
 
       - store_artifacts:
           path: test-reports
