@@ -44,7 +44,7 @@ jobs:
           name: run tests
           command: |
             . venv/bin/activate
-            python manage.py test
+            python py.test -v
 
       - store_artifacts:
           path: test-reports
