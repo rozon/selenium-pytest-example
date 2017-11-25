@@ -61,6 +61,7 @@ def test_github_user_search(browser, browserstack_flag, browser_version, platfor
 
     # Check if github results returns same amount of users
     with pytest.allure.step('Check if github results returns same amount of users'):
+        driver.implicitly_wait(10)
         label_users_search_count = driver.find_element_by_xpath(".//h3[contains(text(), 'user')]").text[0:2]
         label_int = int(label_users_search_count)
 
