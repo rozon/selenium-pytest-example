@@ -23,6 +23,7 @@ def test_github_user_search(browser, browserstack_flag, browser_version, platfor
     checks = 0
     github_user_name = "rozon"
     driver.get('https://github.com/')
+    driver.maximize_window()
 
     # Check for page title
     with pytest.allure.step('Check for page title'):
@@ -61,8 +62,11 @@ def test_github_user_search(browser, browserstack_flag, browser_version, platfor
     # Check if github results returns same amount of users
     with pytest.allure.step('Check if github results returns same amount of users'):
         label_users_search_count = driver.find_element_by_xpath(".//div[contains(@class, 'three-fourths')]/div[1]/h3")
+        label = label_users_search_count.text
+        label_number = label[0:2]
+        label_to_int = int(label_number)
 
-        if github_user_results_count == int(label_users_search_count.text[0:2]):
+        if github_user_results_count == label_to_int:
             pass_counter += 1
         checks += 1
 
